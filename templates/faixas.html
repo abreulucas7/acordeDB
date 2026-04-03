@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <title>{{ pag_nome }}</title>
+</head>
+
+<body>
+    <header>
+        <h1>{{ pag_nome }}</h1>
+        {% include "menu.html" %}
+    </header>
+    <main>
+    <section>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Música</th>
+                <th>Artista</th>
+                <th>Playlist</th>
+                <th>Tablatura</th>
+                <th>Letra</th>
+                <th></th>
+            </tr>
+            {% for id, musica, artista, tablatura, letra, nomes_playlists in info %}
+            <tr>
+                <td>{{ id }}</td>
+                <td><a href="/reproducao/{{ id }}">{{ musica }}</a></td>
+                <td>{{ artista }}</td>
+                <td>{% if nomes_playlists %}{{ nomes_playlists }}{% else %}—{% endif %}</td>
+                <td>{{ tablatura }}</td>
+                <td>{{ letra }}</td>
+                <td><a href="/excluir/faixa/{{ id }}">Excluir</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </section>
+    </main>
+</body>
+</html>

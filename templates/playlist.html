@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <title>{{ pag_nome }}</title>
+</head>
+
+<body>
+    <header>
+        <h1>{{ playlist[1] }}</h1>
+        {% include "menu.html" %}
+        <p><a href="/playlists">← Voltar às playlists</a></p>
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for m in messages %}
+            <li>{{ m }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+        <section>
+            <h2>Adicionar música</h2>
+            {% if disponiveis %}
+            <form action="/playlists/{{ playlist[0] }}/faixa" method="post">
+                <label for="faixa_id">Música</label>
+                <select name="faixa_id" id="faixa_id" required>
+                    {% for id, musica, artista, tablatura, letra in disponiveis %}
+                    <option value="{{ id }}">{{ musica }} — {{ artista }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Adicionar à playlist</button>
+            </form>
+            {% else %}
+            <p>{% if faixas %}Todas as músicas do catálogo já estão nesta playlist.{% else %}Não há músicas no catálogo. <a href="/adicionar_musica">Adicionar música</a>.{% endif %}</p>
+            {% endif %}
+        </section>
+
+        <section>
+            <h2>Músicas nesta playlist</h2>
+            {% if faixas %}
+            <table>
+                <tr>
+                    <th>Música</th>
+                    <th>Artista</th>
+                    <th></th>
+                </tr>
+                {% for id, musica, artista, tablatura, letra in faixas %}
+                <tr>
+                    <td>{{ musica }}</td>
+                    <td>{{ artista }}</td>
+                    <td><a href="/playlists/{{ playlist[0] }}/remover/{{ id }}">Remover da playlist</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p>Ainda não há músicas nesta playlist.</p>
+            {% endif %}
+        </section>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "draft-2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass scss/custom.scss static/bootstrap.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "sass": "^1.94.2",
+    "vexflow": "^5.0.0",
+    "vextab": "^4.0.5"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.28.5"
+  }
+}

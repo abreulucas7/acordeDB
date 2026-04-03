@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <title>{{ pag_nome }}</title>
+</head>
+
+<body>
+    <header>
+        <h1>{{ pag_nome }}</h1>
+        {% include "menu.html" %}
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for m in messages %}
+            <li>{{ m }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+        <form action="/adicionar_musica" method="post">
+            <p>
+                <label for="musica">Música</label>
+                <input type="text" name="musica" id="musica" required>
+            </p>
+            <p>
+                <label for="artista">Artista</label>
+                <input type="text" name="artista" id="artista" required>
+            </p>
+            <p>
+                <label for="tablatura">Tablatura</label>
+                <input type="text" name="tablatura" id="tablatura">
+            </p>
+            <p>
+                <label for="letra">Letra</label>
+                <input type="text" name="letra" id="letra">
+            </p>
+            <p>
+                <label for="playlist_id">Playlist</label>
+                <select name="playlist_id" id="playlist_id">
+                    <option value="">Apenas no catálogo (sem playlist)</option>
+                    {% for nomes, pid in playlists %}
+                    <option value="{{ pid }}">{{ nomes }}</option>
+                    {% endfor %}
+                </select>
+            </p>
+            <p>
+                <button type="submit">Adicionar</button>
+            </p>
+        </form>
+
+        <section>
+            <h2>Músicas no catálogo</h2>
+            {% if info %}
+            <ul>
+                {% for id, musica, artista, tablatura, letra in info %}
+                <li>{{ musica }} — {{ artista }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>Nenhuma música ainda.</p>
+            {% endif %}
+        </section>
+    </main>
+</body>
+
+</html>
