@@ -17,8 +17,8 @@ def listar_musicas():
         '''
         cur = conn.cursor()        
         cur.execute(sql_listar_info)        
-        return cur.fetchall()
-
+        return cur.fetchall() 
+    
 
 def listar_musicas_com_playlists():
     with sqlite3.connect("Acorde.db") as conn:
@@ -61,6 +61,15 @@ def obter_playlist(id):
             (id,),
         )
         return cur.fetchone()
+
+def obter_faixa(id):
+    with sqlite3.connect("Acorde.db") as conn:
+        cur = conn.execute(
+            "SELECT id, musica FROM info WHERE id = ?",
+            (id,),
+        )
+        return cur.fetchone()
+    
 
 
 def listar_faixas_da_playlist(id_playlist):
@@ -127,13 +136,3 @@ def excluir_faixas(id):
         WHERE id = (?)
         '''
         conn.execute(sql_excluir_faixas, (id,)) 
-
-def seek_musica(id, musica):
-    with sqlite3.connect("Acorde.db") as conn:
-        sql_seek_musica = '''
-        SELECT id,musica
-        FROM info
-        WHERE musica = (?)
-        '''
-        conn.execute(sql_seek_musica, (id,musica)) 
-

@@ -4,7 +4,10 @@ from secrets import token_hex
 
 import model
 
+import services.service as service
+
 app = Flask(__name__)
+
 app.secret_key = token_hex()
 
 @app.get("/adicionar_musica")
@@ -25,17 +28,17 @@ def post_musica():
     artista = request.form["artista"]
     tablatura = request.form["tablatura"]
     letra = request.form["letra"]
-    nova_id = model.adicionar_musica(musica, artista, tablatura, letra)
+    service.adicionar_musica(musica, artista, tablatura, letra)
     playlist_id = request.form.get("playlist_id", type=int)
-    if playlist_id and model.obter_playlist(playlist_id):
-        if not model.adicionar_faixa_a_playlist(playlist_id, nova_id):
-            flash("Não foi possível adicionar à playlist (duplicado).")
+    service.obter_playlist(playlist_id, musica, artista, tablatura, letra)
     return redirect("/adicionar_musica") 
+  
 
 @app.get("/playlists")
 def get_playlists():
     listagem_playlists = model.listar_playlists()
     return render_template("/playlists.html", pl = listagem_playlists, pag_nome = "Playlists")
+
 
 @app.post("/playlists")
 def post_playlists():
@@ -62,6 +65,12 @@ def ver_playlist(playlist_id):
         disponiveis=disponiveis,
         pag_nome=playlist[1],
     )
+
+
+@app.get("/reproduzir")
+def get_faixa_particular():
+    faixa = model.obter_faixa()
+    return render_template ("reproduzir.html", faixa = faixa)
 
 
 @app.post("/playlists/<int:playlist_id>/faixa")
@@ -91,19 +100,18 @@ def get_excluir_playlist(id):
     model.excluir_playlists(id)
     return redirect("/playlists") 
 
+
 @app.get("/excluir/faixa/<id>")
 def get_excluir_faixa(id):
     model.excluir_faixas(id)
     return redirect("/")
 
+
 @app.get("/")
 def get_faixas():
-    listagem_musicas = model.listar_musicas_com_playlists()
-    return render_template("faixas.html", info=listagem_musicas, pag_nome = "Faixas") 
+    faixas = model.listar_musicas_com_playlists()
+    return render_template("faixas.html", faixas=faixas, pag_nome = "Faixas") 
 
-@app.get("/index")
-def get_index():
-    return render_template("/index.html")
 
 @app.get("/interface")
 def get_styling():

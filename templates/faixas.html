@@ -25,10 +25,10 @@
                 <th>Letra</th>
                 <th></th>
             </tr>
-            {% for id, musica, artista, tablatura, letra, nomes_playlists in info %}
+            {% for id, musica, artista, tablatura, letra, nomes_playlists in faixas %}
             <tr>
                 <td>{{ id }}</td>
-                <td><a href="/reproducao/{{ id }}">{{ musica }}</a></td>
+                <td><a href="/reproduzir/{{ id }}">{{ musica }}</a></td>
                 <td>{{ artista }}</td>
                 <td>{% if nomes_playlists %}{{ nomes_playlists }}{% else %}—{% endif %}</td>
                 <td>{{ tablatura }}</td>
