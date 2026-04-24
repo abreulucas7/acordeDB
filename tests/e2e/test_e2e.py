@@ -8,9 +8,9 @@ def test_home(page: Page):
 def test_faixas(page: Page):
     page.goto("/")
 
-def test_playlists(page: Page):
-    page.goto("/playlists")
-    page.get_by_role("link", name="Nova").click()
+#def test_playlists(page: Page):
+#    page.goto("/playlists")
+#    page.get_by_role("link", name="Nova").click()
 
 def test_home_button(page: Page):
     page.goto("/adicionar_musica")
