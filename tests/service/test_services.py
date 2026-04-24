@@ -1,6 +1,6 @@
-from unittest.mock import patch
+#from unittest.mock import patch
 
-from app import post_musica
+#from app import post_musica
 
 #@patch("tests.service.adicionar_musica")
 #class TestAdicionarMusica: 
