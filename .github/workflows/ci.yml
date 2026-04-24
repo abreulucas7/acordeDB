@@ -21,17 +21,14 @@ jobs:
       - name: Instalar dependências
         run: pip install flask pytest playwright pytest-playwright
 
-      - name: Testes unitários
-        run: python -m pytest tests/ -v
-
       - name: Instalar Chromium (Playwright)
         run: python -m playwright install --with-deps chromium
 
-      - name: Preparar BD, subir Flask e E2E
+      - name: Preparar BD, subir Flask e testes
         run: |
           set -e
           rm -f Acorde.db
-          python -c "from model import conectar; conectar()"
-          python -c "from app import app; app.run(host=127.0.0.1', port=5000, debug=False, use_reloader=False)" &
+          python create-tables.py
+          python -c "from app import app; app.run(host='127.0.0.1', port=5000, debug=False, use_reloader=False)" &
           sleep 3
-          python -m pytest e2e/ -v
+          python -m pytest tests/ -v
