@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, flash
 
 from secrets import token_hex
 
+import scrape 
+
 import model
 
 import services.service as service
@@ -20,7 +22,6 @@ def get_musica():
         playlists=listagem_playlists,
         pag_nome="Adicionar Música",
     )
-
 
 @app.post("/adicionar_musica")
 def post_musica():
@@ -67,11 +68,19 @@ def ver_playlist(playlist_id):
     )
 
 
-@app.get("/reproduzir")
-def get_faixa_particular():
-    faixa = model.obter_faixa()
-    return render_template ("reproduzir.html", faixa = faixa)
+@app.get("/reproduzir/<int:faixa_id>")
+def ver_reproduzir(faixa_id):
+    faixa = model.obter_faixa(faixa_id)
+    if not faixa: 
+        flash("Faixa não encontrada.")
+        return redirect("/")
+    letra = scrape.letra
+    return render_template("reproduzir.html", faixa=faixa[1], letra = letra)
 
+@app.get("/letra")
+def get_letra():
+    letra = scrape.letra
+    return render_template("/letra.html", pag_nome= "Letra", letra = letra) 
 
 @app.post("/playlists/<int:playlist_id>/faixa")
 def post_adicionar_faixa_playlist(playlist_id):

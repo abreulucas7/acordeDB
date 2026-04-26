@@ -17,22 +17,19 @@
     <section>
         <table>
             <tr>
-                <th>Id</th>
                 <th>Música</th>
                 <th>Artista</th>
                 <th>Playlist</th>
                 <th>Tablatura</th>
                 <th>Letra</th>
-                <th></th>
             </tr>
             {% for id, musica, artista, tablatura, letra, nomes_playlists in faixas %}
             <tr>
-                <td>{{ id }}</td>
-                <td><a href="/reproduzir/{{ id }}">{{ musica }}</a></td>
+                <td><a href="/reproduzir/{{id}}">{{ musica }}</a></td>
                 <td>{{ artista }}</td>
                 <td>{% if nomes_playlists %}{{ nomes_playlists }}{% else %}—{% endif %}</td>
                 <td>{{ tablatura }}</td>
-                <td>{{ letra }}</td>
+                <td><a href="/letra">letra</a></td>
                 <td><a href="/excluir/faixa/{{ id }}">Excluir</a></td>
             </tr>
             {% endfor %}

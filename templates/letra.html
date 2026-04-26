@@ -1,26 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
-
-    <title>{{pag_nome}}</title>
+    <title>{{ pag_nome }}</title>
 </head>
-<body>
-    
-    <header>
+   <header>
         <h1>{{ pag_nome }}</h1>
         {% include "menu.html" %}
     </header>
 
-    <h3>Faixa:{{ faixa }}</h3>
-    <audio controls autoplay>
-        <source src="/static/audio/{{ faixa }}.mp3">
-    </audio>
-    
-    <h1>Letra:</h1>   
+<body>
     {{letra | safe}}
-
 </body>
 </html>
+
+
+<!DOCTYPE html>
+<html lang="pt">
+
